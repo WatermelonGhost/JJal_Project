@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seojae.jjal.dao.FBDAO">
+	<select id="boardList" resultType="com.seojae.jjal.dto.FBDTO">
+		select*from j_freeboard order by fb_created desc
+	</select>
+	
+	<select id="boardInfo" resultType="com.seojae.jjal.dto.FBDTO">
+		select*from j_freeboard 
+		where fb_no = #{param1} order by fb_created desc
+	</select>
+
+	<update id="readcountUP">
+		update j_freeboard set fb_readcount = fb_readcount+1 where fb_no = #{param1}
+	</update>
+
+	
+</mapper>

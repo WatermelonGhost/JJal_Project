@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seojae.jjal.dao.jcommentsDAO">
+	<select id="commentsList" resultType="com.seojae.jjal.dto.jcommentsDTO">
+		select*from j_comments where re_fb_no = #{param1} order by re_created
+	</select>
+	
+	<insert id="submitComment">
+		insert into j_comments values(
+		#{param1},re_no.nextval,#{param2},#{param3},to_char(sysdate,'YYYY-MM-DD HH24:MI')
+		)
+	</insert>
+
+	<select id="updateinfo" resultType="String">
+		select re_content from j_comments where re_no = #{param1} and re_nickname = #{param2}
+	</select>
+
+	<update id="updateComment">
+		update j_comments set re_content = #{param1} where re_no = #{param2} and re_nickname = #{param3}
+	</update>
+
+	<delete id="deleteComment">
+		delete from j_comments where re_no = #{param1} and re_nickname = #{param2}
+	</delete>
+</mapper>

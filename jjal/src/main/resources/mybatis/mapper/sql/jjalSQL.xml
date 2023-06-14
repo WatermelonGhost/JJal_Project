@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.seojae.jjal.dao.JDAO">
+
+	<select id="imgListAll" resultType="com.seojae.jjal.dto.JDTO">
+		select*from jjal order by j_created desc
+	</select>
+	
+	<select id="imgList_category" resultType="com.seojae.jjal.dto.JDTO">
+		select*from jjal where j_category = #{param1} order by j_created desc
+	</select>
+	
+	<select id="viewInfo" resultType="com.seojae.jjal.dto.JDTO">
+		select * from jjal where j_seq = #{param1}
+	</select>
+	
+	<insert id="uploadPost">
+		insert into jjal values
+		(to_char(sysdate,'YYYY-MM-DD HH24:mi'),
+		#{param1},#{param2},#{param3},j_seq.nextval,#{param4})
+	</insert>
+</mapper>
