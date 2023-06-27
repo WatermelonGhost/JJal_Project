@@ -4,5 +4,34 @@
 	height:200px;
 }
 #imgList a{
-	display: block;
+	display: block; 
+	text-decoration-line:none;
+	color:black;
+}
+.deleteBtn, #btnInput{
+	margin: 10px 20px 0 0;
+	
+}
+#boardList{
+	width:80%;
+}
+#tblFB a{
+	display: block; 
+	text-decoration-line:none;
+	color:black;
+}
+#tblFB img{
+	width:100px;
+	height:100px;
+}
+#preview {
+    margin: auto;
+    padding:20px 0 20px 0;
+    display: block;
+    width:50%;
+    height:50%;
+}
+#fbTextarea{
+	margin:auto;
+	width:80%;
 }

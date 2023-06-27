@@ -72,8 +72,8 @@ function gotoUpload(){
 	document.location = "/upload";
 }
 
-var currentPage = 1;
-var itemsPerPage = 10;
+let currentPage = 1;
+let itemsPerPage = 10;
 
 function imgListAll() {
 	$.ajax({
@@ -82,9 +82,9 @@ function imgListAll() {
     	dataType: "json",
     	success: function (data) {
         	$("#imgList").empty();
-        	var startIndex = (currentPage - 1) * itemsPerPage;
-        	var endIndex = startIndex + itemsPerPage;
-        	var paginatedData = data.slice(startIndex, endIndex);
+        	let startIndex = (currentPage - 1) * itemsPerPage;
+        	let endIndex = startIndex + itemsPerPage;
+        	let paginatedData = data.slice(startIndex, endIndex);
 			
 			getList(paginatedData);
       		
@@ -94,16 +94,16 @@ function imgListAll() {
 }
 
 function getList(paginatedData){
-	for (var i = 0; i < paginatedData.length; i++) {
+	for (let i = 0; i < paginatedData.length; i++) {
 				let j_seq = paginatedData[i]["j_seq"];
 				let j_url = paginatedData[i]["j_url"];
 				let j_category = paginatedData[i]["j_category"];
 				let j_title = paginatedData[i]["j_title"];
-        		var html = [`
+        		let html = [`
           		<div class="col">
 	      			<div class="p-3">
 		          		<a href="/view/${j_seq}"><img class="inImage" src="/img/${j_url}">
-		          		<p><span>${j_category}</span><br>
+		          		<p><span class="badge text-bg-primary">${j_category}</span><br>
 		          		<span>${j_title}</span></p></a>
 	          		</div>
           		</div>
@@ -113,13 +113,13 @@ function getList(paginatedData){
 }
 
 function createPagination(totalItems) {
-	var totalPages = Math.ceil(totalItems / itemsPerPage);
-  	var paginationHTML = "";
+	let totalPages = Math.ceil(totalItems / itemsPerPage);
+  	let paginationHTML = "";
 
   	if (currentPage > 1) {
     	paginationHTML += '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage - 1) + ')">Previous</li>';
 	}
-	for (var i = 1; i <= totalPages; i++) {
+	for (let i = 1; i <= totalPages; i++) {
     	if (i === currentPage) {
       		paginationHTML += '<li class="page-item active"><a class="page-link">' + i + '</a></li>';
     	} else {
@@ -144,13 +144,13 @@ function imgList_category(){
     	success: function (data) {
         	$("#imgList").empty();
         	$("#title").empty();
-        	var startIndex = (currentPage - 1) * itemsPerPage;
-        	var endIndex = startIndex + itemsPerPage;
-        	var paginatedData = data.slice(startIndex, endIndex);
+        	let startIndex = (currentPage - 1) * itemsPerPage;
+        	let endIndex = startIndex + itemsPerPage;
+        	let paginatedData = data.slice(startIndex, endIndex);
 			
 			getList(paginatedData);
       		
-      		var html=[`
+      		let html=[`
 				  <h2>${j_category}</h2>
 			  `];
 		  	$("#title").append(html.join(""));

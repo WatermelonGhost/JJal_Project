@@ -6,7 +6,9 @@ $(document)
 .on("click","#btnLogin",gotoLogin)
 .on("click","#btnSignup",gotoSignup)
 .on("click","#btnLogout",submitLogout)
+.on("click","#btnDelete",viewDelete)
 
+let checkNickname = '';
 function checkLogin(){
 	$.ajax({
 		url: "/check/login",
@@ -16,7 +18,8 @@ function checkLogin(){
 			if(loginNickname == "none"){
 				loginSignupBtn();
 			}else{
-				addInfoLogoutBtn(loginNickname);				
+				addInfoLogoutBtn(loginNickname);
+				checkNickname = loginNickname;
 			}
 		}
 	})
@@ -58,7 +61,8 @@ function submitLogout(){
 }
 
 function showInfo(){
-	let j_seq = $("#inputNo").val()
+	let j_seq = $("#inputNo").val();
+	
 	$.ajax({
 		url: "/view/info",
 		type: "post",
@@ -68,11 +72,41 @@ function showInfo(){
 			let j_title = data["j_title"];
 			let category = data["j_category"];
 			let url = data["j_url"];
-
-			$("#inputJTitle").val(j_title);
+			let j_nickname = data["j_nickname"];
+			let j_created = data["j_created"];
+			
+			$("#inputJTitle").text(j_title);
+			$("#inputJNickname").text(`작성자 : ${j_nickname} | 카테고리: ${category} | 작성일 : ${j_created} `);
 			$("#selectedCategory").text(category)
 			$("#preview").attr("src",`/img/${url}`)
+			if(checkNickname == j_nickname){
+				addDeleteBtn();	
+			}
 		}
 	
+	})
+}
+
+function addDeleteBtn(){
+	let addDeleteBtn=
+	`<button type="button" class="btn btn-outline-primary float-right" id="btnDelete">삭제하기</button>`
+	$(".deleteBtn").append(addDeleteBtn);
+}
+
+function viewDelete(){
+	let j_seq = $("#inputNo").val()
+	$.ajax({
+		url: "/delete/post",
+		type: "post",
+		data: {j_seq:j_seq},
+		dataType: "text",
+		success: function(check){
+			if(check == "false"){
+				alert("정보가 올바르지 않습니다.");
+			}else{
+				alert("게시물을 삭제하였습니다.");
+				document.location = "/home";
+			}
+		}
 	})
 }

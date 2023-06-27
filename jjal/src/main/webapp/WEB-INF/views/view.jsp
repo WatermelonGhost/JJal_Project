@@ -25,18 +25,17 @@
 
 <div class="container">
 	<input type="hidden" id="inputNo" value="${j_seq}">
-	<input type="text" class="form-control" id="inputJTitle" readonly>
-	
-	<div class="dropdown">
-		<button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="selectedCategory" readonly>카테고리</button>
-	</div>
+	<!-- <input type="text" class="form-control" id="inputJTitle" readonly> -->
+	<h2 id="inputJTitle"></h2>
+	<h6 id="inputJNickname"></h6>
 	
 	<div>
 		<img class="img-fluid" id="preview">
 	</div>
 	
+	<div class="deleteBtn" align="right">
+	</div>
 
-   	
 </div>
 
 

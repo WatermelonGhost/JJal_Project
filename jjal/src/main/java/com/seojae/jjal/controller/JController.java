@@ -65,7 +65,7 @@ public class JController {
 	@ResponseBody
 	public void uploadFile(@RequestParam("uploadFile") MultipartFile uploadFile) {
 
-		String uploadFolder = "C:\\Users\\admin\\eclipse-workspace\\jjal\\src\\main\\resources\\static\\img";
+		String uploadFolder = "C:\\Users\\admin\\Documents\\JJal_Project\\jjal\\src\\main\\resources\\static\\img";
 
 		String originalFileName = uploadFile.getOriginalFilename();
 
@@ -96,7 +96,23 @@ public class JController {
 		}
 		return check;
 	}
-
+	
+	@PostMapping("/delete/post")
+	@ResponseBody
+	public String deletePost(@RequestParam int j_seq,
+							 HttpServletRequest req) {
+		String check = "false";
+		HttpSession session = req.getSession();
+		
+		if(session.getAttribute("nickname")!=null) {
+			String nickname = session.getAttribute("nickname").toString();
+			jdao.deletePost(j_seq, nickname);
+			check = "true";
+		}
+		return check;
+	}
+	
+	
 	public String getListJA(ArrayList<JDTO> jdto) {
 		JSONArray ja = new JSONArray();
 

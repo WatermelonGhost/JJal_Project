@@ -22,4 +22,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(to_char(sysdate,'YYYY-MM-DD HH24:mi'),
 		#{param1},#{param2},#{param3},j_seq.nextval,#{param4})
 	</insert>
+	
+	<delete id="deletePost">
+		delete from jjal where j_seq = #{param1} and j_nickname = #{param2}
+	</delete>
 </mapper>

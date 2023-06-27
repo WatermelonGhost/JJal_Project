@@ -15,5 +15,7 @@ public interface JDAO {
 	JDTO viewInfo(int j_seq);
 
 	void uploadPost(String j_name, String category, String url, String nickname);
+	
+	void deletePost(int j_seq, String nickname);
 
 }
