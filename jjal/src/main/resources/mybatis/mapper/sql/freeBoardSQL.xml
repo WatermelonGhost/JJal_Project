@@ -16,6 +16,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="readcountUP">
 		update j_freeboard set fb_readcount = fb_readcount+1 where fb_no = #{param1}
 	</update>
-
+	
+	<insert id="freeBoardNewPost">
+		insert into j_freeboard values
+		(fb_no.nextval,#{param1},#{param2},to_char(sysdate,'YYYY-MM-DD HH24:mi:ss'),
+		#{param3},#{param4},0)
+	</insert>
+	
+	<delete id="freeBoardDetele">
+		delete from j_freeboard where fb_no = #{param1} and fb_writer = #{param2}
+	</delete>
 	
 </mapper>

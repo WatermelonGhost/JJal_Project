@@ -29,19 +29,18 @@
 	</div>
 	
 	<div id="boardList">
-		<table class="table table-condensed table-hover" id="tblFB">
-			<tbody>
+		<table class="table-condensed table table-hover" id="tblFB">
+			<tbody id="tbodyFB">
 			</tbody>
 		</table>
 	</div>
+
 	
-	<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3" id="imgList">
-	</div>
-	
-	<nav aria-label="Page navigation example">
-		<ul class="pagination" id="pagination">
+	<nav aria-label="Page navigation">
+		<ul class="pagination justify-content-center" id="pagination">
 		</ul>
 	</nav>
+	
 	
 	<div class="newPostBtn" align="right">
 	</div>

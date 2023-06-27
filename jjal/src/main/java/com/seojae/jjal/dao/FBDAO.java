@@ -15,4 +15,6 @@ public interface FBDAO {
 	void readcountUP(int fb_no);
 
 	void freeBoardNewPost(String fb_title, String fb_content, String fb_url, String nickname);
+	
+	void freeBoardDetele(int fb_no, String nickname);
 }

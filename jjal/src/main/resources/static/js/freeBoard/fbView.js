@@ -11,8 +11,9 @@ $(document)
 	.on("click", ".editBtn", editModal)
 	.on("click", ".updateBtn", updateComment)
 	.on("click", ".delBtn", deleteComment)
+	.on("click","#btnDelete",freeboardDelete)
 
-let logNickname = "";
+let checkNickname = "";
 function checkLogin() {
 	$.ajax({
 		url: "/check/login",
@@ -24,7 +25,7 @@ function checkLogin() {
 
 			} else {
 				addInfoLogoutBtn(loginNickname);
-				logNickname = loginNickname;
+				checkNickname = loginNickname;
 			}
 		}
 	})
@@ -82,12 +83,15 @@ function showInfo() {
 
 			let html = [`
 				<h1>${title}</h1>
-				<span>작성자 : ${writer} </span>|<span> 작성일 : ${created} </span>|<span> 조회 : ${readcount}</span>
+				<span style="color:grey">작성자 : ${writer} | 작성일 : ${created} | 조회 : ${readcount}</span>
 			`];
 			$("#title").append(html.join(""));
 
 			$("#preview").attr("src", "/img/fb/" + url);
-			$("#content").text(content)
+			$("#content").text(content);
+			if(checkNickname == writer){
+				addDeleteBtn();	
+			}
 		}
 	})
 }
@@ -109,7 +113,7 @@ function commentsList() {
 				let re_created = data[i]["re_created"];
 
 				let editDelBtn = "";
-				if (re_nickname == logNickname) {
+				if (re_nickname == checkNickname) {
 					editDelBtn = `
 					<button class="editBtn" data-re_no="${re_no}">수정</button>
 					<button class="delBtn" data-re_no="${re_no}">삭제</button>
@@ -212,6 +216,30 @@ function deleteComment() {
 				alert("댓글 삭제 실패");
 			} else {
 				commentsList();
+			}
+		}
+	})
+}
+
+function addDeleteBtn(){
+	let addDeleteBtn=
+	`<button type="button" class="btn btn-outline-primary float-right" id="btnDelete">삭제하기</button>`
+	$(".deleteBtn").append(addDeleteBtn);
+}
+
+function freeboardDelete(){
+	let fb_no = $("#inputNo").val()
+	$.ajax({
+		url: "/freeboard/delete",
+		type: "post",
+		data: {fb_no:fb_no},
+		dataType: "text",
+		success: function(check){
+			if(check == "false"){
+				alert("정보가 올바르지 않습니다.");
+			}else{
+				alert("게시물을 삭제하였습니다.");
+				document.location = "/freeBoard";
 			}
 		}
 	})

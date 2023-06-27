@@ -5,7 +5,7 @@ $(document)
     .on("click", "#btnLogin", gotoLogin)
     .on("click", "#btnSignup", gotoSignup)
     .on("click", "#btnLogout", submitLogout)
-
+	.on("click", "#btnSubmit", newPost)
     .on("change", "#imageFile", imgPreview)
 
 function checkLogin() {
@@ -91,7 +91,7 @@ function uploadFile(callback) {
         }
 
         $.ajax({
-            url: "/upload/file",
+            url: "/freeboard/file",
             processData: false,
             contentType: false,
             data: formData,
@@ -112,29 +112,33 @@ function uploadFile(callback) {
 function newPost() {
     uploadFile(function (uploadStatus) {
         if (uploadStatus) {
-            j_title = $("#inputJTitle").val();
-            j_url = $("#imageFile").val();
-            ar = j_url.split("\\");
-            j_url = ar[2];
+            fb_title = $("#inputTitle").val();
+            fb_content = $("#fbTextarea").val();
+            fb_url = $("#imageFile").val();
+            ar = fb_url.split("\\");
+            fb_url = ar[2];
 
             $.ajax({
-                url: "/upload/post",
+                url: "/freeboard/newPost",
                 type: "post",
-                data: { j_title: j_title, j_category: j_category, j_url: j_url },
+                data: { 
+					fb_title: fb_title,
+                	fb_content: fb_content,
+                	fb_url: fb_url },
                 dtatType: "text",
                 beforeSend: function () {
-                    if (j_title == "" || j_title == null) {
+                    if (fb_title == "" || fb_title == null) {
                         alert("제목을 입력해주세요.");
                         return false;
                     }
-                    if (j_category == "카테고리" || j_category == "" || j_category == null) {
-                        alert("카테고리를 선택해주세요.")
+                    if (fb_content == "" || fb_content == null) {
+                        alert("내용을 입력해주세요.");
                         return false;
                     }
                 },
                 success: function (check) {
-                    alert("등록을 완료하였습니다.")
-                    document.location = "/home";
+                    alert("게시물을 등록하였습니다.")
+                    document.location = "/freeBoard";
 
                 }
             })

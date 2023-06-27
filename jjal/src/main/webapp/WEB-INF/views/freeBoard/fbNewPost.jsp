@@ -25,7 +25,7 @@
 
 		<div class="container">
 			<h3>자유 게시판</h3>
-			<input type="text" class="form-control" id="inputJName" placeholder="제목을 입력해주세요.">
+			<input type="text" class="form-control" id="inputTitle" placeholder="제목을 입력해주세요.">
 
 			<div>
 				<img class="img-fluid" id="preview">
@@ -36,7 +36,7 @@
 			</div>
 
 			<div class="form-floating">
-				<textarea class="form-control" id="floatingTextarea" maxlength="300"></textarea>
+				<textarea class="form-control" id="fbTextarea" maxlength="300"></textarea>
 			</div>
 
 			<div align="right">

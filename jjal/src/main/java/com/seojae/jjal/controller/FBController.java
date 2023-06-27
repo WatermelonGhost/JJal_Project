@@ -1,5 +1,6 @@
 package com.seojae.jjal.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.seojae.jjal.dao.FBDAO;
 import com.seojae.jjal.dto.FBDTO;
@@ -34,7 +36,7 @@ public class FBController {
 		return "/freeBoard/fbNewPost";
 	}
 
-	@PostMapping("/board/list")
+	@PostMapping("/board/list/all")
 	@ResponseBody
 	public String boardList() {
 		ArrayList<FBDTO> fbdto = new ArrayList<FBDTO>();
@@ -55,6 +57,25 @@ public class FBController {
 		FBDTO fbdto = fbdao.boardInfo(fb_no);
 		return fbdto;
 	}
+	
+	@PostMapping("/freeboard/file")
+	@ResponseBody
+	public void uploadFile(@RequestParam("uploadFile") MultipartFile uploadFile) {
+
+		String uploadFolder = "C:\\Users\\admin\\Documents\\JJal_Project\\jjal\\src\\main\\resources\\static\\img\\fb";
+
+		String originalFileName = uploadFile.getOriginalFilename();
+
+		String newFileName = originalFileName;
+
+		File saveFile = new File(uploadFolder, newFileName);
+
+		try {
+			uploadFile.transferTo(saveFile);
+		} catch (Exception e) {
+			System.out.println("error");
+		}
+	}
 
 	@PostMapping("/freeboard/newPost")
 	@ResponseBody
@@ -69,6 +90,21 @@ public class FBController {
 		} else {
 			String nickname = session.getAttribute("nickname").toString();
 			fbdao.freeBoardNewPost(fb_title, fb_content, fb_url, nickname);
+		}
+		return check;
+	}
+	
+	@PostMapping("/freeboard/delete")
+	@ResponseBody
+	public String deletePost(@RequestParam int fb_no,
+							 HttpServletRequest req) {
+		String check = "false";
+		HttpSession session = req.getSession();
+		
+		if(session.getAttribute("nickname")!=null) {
+			String nickname = session.getAttribute("nickname").toString();
+			fbdao.freeBoardDetele(fb_no, nickname);
+			check = "true";
 		}
 		return check;
 	}

@@ -1,7 +1,7 @@
 $(document)
 
 	.ready(checkLogin)
-	.ready(boardList)
+	.ready(boardListAll)
 
 	.on("click", "#btnLogin", gotoLogin)
 	.on("click", "#btnSignup", gotoSignup)
@@ -24,16 +24,30 @@ function checkLogin() {
 	})
 }
 
-function boardList() {
+let currentPage = 1;
+let itemsPerPage = 10;
+
+function boardListAll() {
 	$.ajax({
-		url: "/board/list",
+		url: "/board/list/all",
 		type: "post",
 		dataType: "json",
 		success: function (data) {
 			$("#tblFB").empty();
+			let startIndex = (currentPage - 1) * itemsPerPage;
+        	let endIndex = startIndex + itemsPerPage;
+        	let paginatedData = data.slice(startIndex, endIndex);
+			
+			getList(paginatedData);
+			
+			createPagination(data.length);
+		}
+	})
+}
 
-			for (let i = 0; i < data.length; i++) {
-				let fb = data[i]
+function getList(paginatedData){
+	for (let i = 0; i < paginatedData.length; i++) {
+				let fb = paginatedData[i]
 				let fb_no = fb["fb_no"];
 				let fb_url = fb["fb_url"];
 				let fb_title = fb["fb_title"];
@@ -43,18 +57,43 @@ function boardList() {
 
 				let html = [`
 					<tr><td><div>
-					<a href="/freeboard/${fb_no}"><img src="/img/fb/${fb_url}" style="width:100px;height:100px"></a>
+					<a href="/freeboard/${fb_no}"><img src="/img/fb/${fb_url}"></a>
 					</div></td>
 					<td><div>
 					<a href="/freeboard/${fb_no}">
-					<span>${fb_title}</span><br>
-					<span>${fb_writer}</span>&nbsp;<span>${fb_created}</span>&nbsp;<span>${fb_readcount}</span>
+					<span style="font-size:20px">${fb_title}</span><br>
+					<span style="color:grey">${fb_writer} | ${fb_created} | 조회 : ${fb_readcount}</span>
 					</a></div></td></tr>
 					`];
 				$("#tblFB").append(html.join(""));
 			}
-		}
-	})
+}
+
+function createPagination(totalItems) {
+	let totalPages = Math.ceil(totalItems / itemsPerPage);
+  	let paginationHTML = "";
+
+  	if (currentPage > 1) {
+    	paginationHTML += '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage - 1) + ')">Previous</li>';
+	}
+	for (let i = 1; i <= totalPages; i++) {
+    	if (i === currentPage) {
+      		paginationHTML += '<li class="page-item active"><a class="page-link">' + i + '</a></li>';
+    	} else {
+      		paginationHTML += '<li class="page-item"><a class="page-link" onclick="changePage(' + i + ')">' + i + '</a></li>';
+    	}
+  	}
+
+  	if (currentPage < totalPages) {
+    	paginationHTML += '<li class="page-item"><a class="page-link" onclick="changePage(' + (currentPage + 1) + ')">Next</a></li>';
+  	}
+
+  	$("#pagination").html(paginationHTML);
+}
+
+function changePage(page) {
+  	currentPage = page;
+  	boardListAll();
 }
 
 function addInfoLogoutBtn(loginNickname) {

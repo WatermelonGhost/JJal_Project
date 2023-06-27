@@ -35,11 +35,12 @@
 				<img class="img-fluid" id="preview">
 			</div>
 
-			<div>
-				<textarea class="form-control" id="content" maxlength="300" style="height: 100px" readonly></textarea>
+			<div id="fbTextarea">
+				<p id="content"></p>
 			</div>
 
-
+			<div class="deleteBtn" align="right">
+			</div>
 		</div>
 
 		<hr>
@@ -60,7 +61,9 @@
 			<div class="form-floating" id="writeDiv">
 				<textarea class="form-control" id="commentInput" style="height: 100px"></textarea>
 				<label for="floatingTextarea2">Comments</label>
-				<button id="btnInput">댓글 등록</button>
+			</div>
+			<div align="right">
+				<button class="btn btn-outline-primary" id="btnInput">댓글 등록</button>			
 			</div>
 		</div>
 
