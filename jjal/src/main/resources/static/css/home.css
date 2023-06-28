@@ -1,4 +1,12 @@
 @charset "UTF-8";
+.headerTitle{
+	font-size:25px;
+	font-weight:600;
+	padding-left:15px;
+}
+.loginButtons{
+	padding:10px 0 10px 0;
+}
 .inImage{
 	width:200px;
 	height:200px;

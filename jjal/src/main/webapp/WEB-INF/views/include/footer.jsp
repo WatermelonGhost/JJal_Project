@@ -7,8 +7,9 @@
 		<div class="col-md-4 d-flex align-items-center">
 			<a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
 				<img src="/img/good.jpg" style="width:40px;height:40px">
+				<span style="font-size:20px;font-weight:600">짤 커뮤니티</span>
 			</a>
-			<span class="mb-3 mb-md-0 text-muted">© 2023 Company, Inc</span>
+			<span class="mb-3 mb-md-0 text-muted">© 2023 JJal Company, Inc</span>
 		</div>
 		
 		<ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
